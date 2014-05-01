@@ -1,0 +1,90 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cyan_col"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.jsp.lh.MainActivity$PlaceholderFragment" >
+
+    <RelativeLayout
+        android:id="@+id/main_base_relative_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp" >
+
+        <LinearLayout
+            android:id="@+id/main_lin_lay_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/main_lin_lay_2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".35" >
+
+                <Button
+                    android:id="@+id/rintake_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="recordFoodIntake"
+                    android:text="@string/rintake" />
+
+                <Button
+                    android:id="@+id/rexercise_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="recordExercise"
+                    android:text="@string/rexercise" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/main_lin_lay_3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".35" >
+
+                <Button
+                    android:id="@+id/vfoods_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="viewFoodDatabase"
+                    android:text="View Food Database" />
+
+                <Button
+                    android:id="@+id/vreports_buttons"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="viewReports"
+                    android:text="@string/vreports" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/edit_profile_button"
+            
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".15"
+                android:onClick="editProfile"
+                android:text="@string/eprofile" />
+
+            <Button
+                android:id="@+id/exit_button"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".15"
+                android:onClick="endApplication"
+                android:text="@string/exit" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

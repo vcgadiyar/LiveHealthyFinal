@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cyan_col"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.jsp.lh.ReportsHomeActivity$PlaceholderFragment" >
+
+    <ScrollView
+        android:id="@+id/reports_home_sv"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/reports_home_ll_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight=".3"
+                android:src="@drawable/fruits" />
+
+            <Button
+                android:id="@+id/view_calcons_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:onClick="viewConsumption"
+                android:text="@string/view_calcons" />
+
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight=".3"
+                android:src="@drawable/workout" />
+
+            <Button
+                android:id="@+id/view_exercise_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:onClick="viewExercise"
+                android:text="@string/view_exercises" />
+
+            <ImageView
+                android:id="@+id/image3"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight=".3"
+                android:src="@drawable/steps" />
+
+            <Button
+                android:id="@+id/view_steptracker_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:onClick="viewStepTracker"
+                android:text="@string/view_steptracker" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
