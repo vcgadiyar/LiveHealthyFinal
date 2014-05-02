@@ -50,7 +50,14 @@ public class RecordFoodActivity extends Activity {
 			getFragmentManager().beginTransaction()
 			.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		cal_value = "--";
 		
+	}
+	
+	public void addNewFood(View v)
+	{
+		Intent intent = new Intent(this, AddFoodItem.class);
+	    startActivity(intent);
 	}
 	
 	
