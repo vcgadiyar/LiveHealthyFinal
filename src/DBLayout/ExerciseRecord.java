@@ -4,9 +4,10 @@ package DBLayout;
 
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import entities.ExerciseRecordEntity;
-
+import entities.FoodRecordEntity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -48,7 +49,7 @@ public class ExerciseRecord
 	public void insertRecord(ExerciseRecordEntity e) 
 	{
 		ContentValues newExercise = new ContentValues();
-		newExercise.put("workoutid", e.getWorkoutid());
+		newExercise.put("workoutname", e.getWorkoutName());
 		newExercise.put("duration", e.getDuration());
 		newExercise.put("tot_calories", e.getTotalCalories());
 		newExercise.put("timestamp", e.getTimestamp());   
@@ -63,7 +64,7 @@ public class ExerciseRecord
 	public void updateRecord(int id, ExerciseRecordEntity e) 
 	{
 		ContentValues editExercise = new ContentValues();
-		editExercise.put("workoutid", e.getWorkoutid());
+		editExercise.put("workoutid", e.getWorkoutName());
 		editExercise.put("duration", e.getDuration());
 		editExercise.put("tot_calories", e.getTotalCalories());
 		editExercise.put("timestamp", e.getTimestamp());   
@@ -89,14 +90,14 @@ public class ExerciseRecord
 		{
 			while (result.isAfterLast() == false) 
 			{
-				idIndex = result.getColumnIndex("workoutid");
+				idIndex = result.getColumnIndex("workoutname");
 				tsIndex = result.getColumnIndex("timestamp");
 				calIndex = result.getColumnIndex("tot_calories");
 				durIndex = result.getColumnIndex("duration");
 				// fill TextViews with the retrieved data
 
-				e1 = new ExerciseRecordEntity(result.getInt(idIndex), result.getInt(durIndex),
-						result.getInt(calIndex), result.getString(tsIndex));
+				e1 = new ExerciseRecordEntity(result.getString(idIndex), result.getInt(durIndex),
+						result.getInt(calIndex), result.getInt(tsIndex));
 				ar.add(e1);
 				result.moveToNext();
 			}
@@ -119,19 +120,55 @@ public class ExerciseRecord
 		if( result != null && result.moveToFirst() )
 		{
 
-			idIndex = result.getColumnIndex("workoutid");
+			idIndex = result.getColumnIndex("workoutname");
 			tsIndex = result.getColumnIndex("timestamp");
 			calIndex = result.getColumnIndex("tot_calories");
 			durIndex = result.getColumnIndex("duration");
 			// fill TextViews with the retrieved data
 
-			e1 = new ExerciseRecordEntity(result.getInt(idIndex), result.getInt(durIndex),
-					result.getInt(calIndex), result.getString(tsIndex));
+			e1 = new ExerciseRecordEntity(result.getString(idIndex), result.getInt(durIndex),
+					result.getInt(calIndex), result.getInt(tsIndex));
 
 
 		}
 		return e1;
 	} // end method getOnContact
+	
+	// return a LHM with cals consumed per day
+	public LinkedHashMap<String, Integer> getRecordsPerDay() 
+	{
+		Cursor result = database.rawQuery("SELECT SUM(tot_calories) as sum_cal, "
+				+ "strftime('%d-%m-%Y',(\"timestamp\"-14400000)/1000,'unixepoch') as "
+				+ "my_date from ExerciseRecord group by "
+				+ "strftime('%d-%m-%Y',(\"timestamp\"-14400000)/1000,'unixepoch')", null);
+
+		LinkedHashMap<String, Integer> calsPerDay = new LinkedHashMap<String, Integer>();
+
+		
+		int tsIndex;
+		int sumindex;
+		
+		if( result != null && result.moveToFirst() )
+		{
+			while (result.isAfterLast() == false) 
+			{
+				tsIndex = result.getColumnIndex("my_date");
+				sumindex = result.getColumnIndex("sum_cal");
+
+				// fill TextViews with the retrieved data
+
+				System.out.println(" Date: "+result.getString(tsIndex)+" Calories Burnts: "+result.getInt(sumindex));
+				calsPerDay.put(result.getString(tsIndex), result.getInt(sumindex));
+
+				//					e1 = new FoodRecordEntity(result.getString(idIndex), result.getInt(tsIndex));
+				//					ar.add(e1);
+				result.moveToNext();
+			}
+		}
+		return calsPerDay;
+
+	} // end method getAllContacts
+
 
 	public void removeAll()
 	{
@@ -166,8 +203,8 @@ public class ExerciseRecord
 			// query to create a new table named contacts
 			String createQuery = "CREATE TABLE ExerciseRecord" +
 					"(id integer primary key autoincrement," +
-					"workoutid integer, duration integer, tot_calories integer, timestamp TEXT"
-					+ "FOREIGN KEY (workoutid) REFERENCES ExerciseDatabase (id));";
+					"workoutname TEXT, duration integer, tot_calories integer, timestamp int, "
+					+ "FOREIGN KEY (workoutname) REFERENCES ExerciseDatabase (name));";
 
 			db.execSQL(createQuery); // execute the query
 		} // end method onCreate

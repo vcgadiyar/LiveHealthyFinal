@@ -17,6 +17,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ public class RecordFoodActivity extends Activity {
 
 	private static final int VOICE_REQUEST_CODE = 1234;
 	public static final int SCAN_REQUEST_CODE = 0x0000c0de;
+	public static String cal_value = "--";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,17 +60,15 @@ public class RecordFoodActivity extends Activity {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.record_food, menu);
-		
-
-	 	
+			 	
 		EditText edit_Text = (EditText)findViewById(R.id.foodText);
 		edit_Text.setOnFocusChangeListener(new OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 			    if(hasFocus){
-			        Toast.makeText(getApplicationContext(), "got the focus", Toast.LENGTH_LONG).show();
+			        //Toast.makeText(getApplicationContext(), "got the focus", Toast.LENGTH_LONG).show();
 			    }else {
-			        Toast.makeText(getApplicationContext(), "lost the focus", Toast.LENGTH_LONG).show();
+			        //Toast.makeText(getApplicationContext(), "lost the focus", Toast.LENGTH_LONG).show();
 			        FoodEntity fe = null;
 			        EditText edit_text1 = (EditText)findViewById(R.id.foodText);
 			        System.out.println("Word loooking for is "+edit_text1);
@@ -80,17 +80,21 @@ public class RecordFoodActivity extends Activity {
 					TextView calt = (TextView) findViewById(R.id.calText);
 					if (fe != null)
 					{
-
+						cal_value = String.valueOf(fe.getCalories());
 						calt.setText(String.valueOf(fe.getCalories()));
 					}
 					else
 					{
+						cal_value = "Food not found";
 						calt.setText("Food not found");
 					}
 					db.close();
 			    }
 			   }
 			});
+		TextView calText = (TextView)findViewById(R.id.calText);
+		calText.setText(cal_value);
+		
 		return true;
 	}
 
@@ -108,7 +112,7 @@ public class RecordFoodActivity extends Activity {
 	
 	public void recordEntry(View v)
 	{
-		//try {
+		try {
 		EditText fname = (EditText)findViewById(R.id.foodText);
 		TextView cals = (TextView)findViewById(R.id.calText);
 		DatePicker dp = (DatePicker)findViewById(R.id.datePicker1);
@@ -141,35 +145,28 @@ public class RecordFoodActivity extends Activity {
 			FoodRecordEntity fre = new FoodRecordEntity(fe.getName(), startTime, fe.getCalories());
 			FoodRecord frdb = new FoodRecord(RecordFoodActivity.this);
 			frdb.insertRecord(fre);
+			Toast.makeText(getApplicationContext(), "Record Inserted Successfully!", Toast.LENGTH_LONG).show();
+			fname.setText("");
+			calt.setText("");
+			cal_value = "--";
 		}
 		else
 		{
-			calt.setText("Food not found");
+			Toast.makeText(getApplicationContext(), "Kindly check the input entered", Toast.LENGTH_LONG).show();
 		}
 		db.close();
-//		}
-//		
-//		catch (Exception e)
-//		{
-//			Toast.makeText(getApplicationContext(), "Kindly check the input entered", Toast.LENGTH_LONG).show();
-//		}		
+		
+		}
+		
+		catch (Exception e)
+		{
+			Toast.makeText(getApplicationContext(), "Kindly check the input entered", Toast.LENGTH_LONG).show();
+		}		
 	}
 
 	/* Callback for Voice Button Click */
 	public void onSpeak(View v)
 	{
-		//		Button speakButton = (Button) findViewById(R.id.speakButton);
-		// 
-		//        // Disable button if no recognition service is present
-		//        PackageManager pm = getPackageManager();
-		//        List<ResolveInfo> activities = pm.queryIntentActivities(
-		//                new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
-		//        if (activities.size() == 0)
-		//        {
-		//            speakButton.setEnabled(false);
-		//            speakButton.setText("Recognizer not present");
-		//        }
-
 		startVoiceRecognitionActivity();
 	}
 
@@ -177,6 +174,12 @@ public class RecordFoodActivity extends Activity {
 	{
 		IntentIntegrator scanIntegrator = new IntentIntegrator(this);
 		scanIntegrator.initiateScan();
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	super.onConfigurationChanged(newConfig);
+	    // This overrides default action
 	}
 
 
@@ -227,11 +230,12 @@ public class RecordFoodActivity extends Activity {
 				TextView calt = (TextView) findViewById(R.id.calText);
 				if (fe != null)
 				{
-
+					cal_value = String.valueOf(fe.getCalories());
 					calt.setText(String.valueOf(fe.getCalories()));
 				}
 				else
 				{
+					cal_value = "Food not found";
 					calt.setText("Food not found");
 				}
 				db.close();
@@ -265,12 +269,13 @@ public class RecordFoodActivity extends Activity {
 					EditText text3 = (EditText) findViewById(R.id.foodText);
 					if (fe != null)
 					{
-
+						cal_value = String.valueOf(fe.getCalories());
 						calt.setText(String.valueOf(fe.getCalories()));
 						text3.setText(fe.getName());
 					}
 					else
 					{
+						cal_value = "Food not found";
 						calt.setText("Food not found");
 					}
 					db.close();

@@ -18,43 +18,33 @@
         android:layout_marginBottom="97dp" >
     </RelativeLayout>
 
-    <View
-        android:id="@+id/view1"
-        android:layout_width="1dp"
-        android:layout_height="150dp"
-        android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@+id/editText2"
-        android:background="@android:color/darker_gray" />
-
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/ageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText3"
-        android:layout_below="@+id/editText3"
+        android:layout_alignLeft="@+id/lname"
+        android:layout_below="@+id/lname"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/enter_age"
-        android:inputType="textPersonName" />
-
-    
+        android:inputType="number" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/lname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_below="@+id/editText2"
+        android:layout_alignLeft="@+id/fname"
+        android:layout_below="@+id/fname"
         android:ems="10"
         android:hint="@string/enter_last"
-        android:inputType="number" />
+        android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/editText2"
-        android:layout_alignBottom="@+id/editText2"
+        android:layout_alignBaseline="@+id/fname"
+        android:layout_alignBottom="@+id/fname"
         android:layout_alignLeft="@+id/relativeLayout1"
         android:text="First Name:" />
 
@@ -62,68 +52,15 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/editText3"
-        android:layout_alignBottom="@+id/editText3"
+        android:layout_alignBaseline="@+id/lname"
+        android:layout_alignBottom="@+id/lname"
         android:layout_alignLeft="@+id/textView1"
         android:text="Last Name:" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/editText1"
-        android:layout_alignBottom="@+id/editText1"
-        android:layout_alignLeft="@+id/textView2"
-        android:text="Age:" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view1"
-        android:layout_marginLeft="160dp"
-        android:layout_marginTop="205dp"
-        android:layout_toRightOf="@+id/textView3"
-        android:onClick="gotoHomeScreen"
-        android:text="Submit" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView4"
-        android:layout_marginTop="48dp"
-        android:text="Weight" />
-
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/fname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView7"
-        android:layout_alignBottom="@+id/textView7"
-        android:layout_alignRight="@+id/button1"
-        android:ems="10"
-        android:hint="@string/kgs"
-        android:inputType="number" />
-
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView7"
-        android:layout_toLeftOf="@+id/editText5"
-        android:ems="10"
-        android:hint="@string/feet"
-        android:inputType="number" >
-
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/view1"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/textView1"
@@ -131,32 +68,77 @@
         android:hint="@string/first"
         android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/editText5"
+    <Button
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editText4"
-        android:layout_alignRight="@+id/imageView1"
+        android:layout_alignRight="@+id/feetText"
+        android:layout_below="@+id/weightText"
+        android:layout_marginRight="21dp"
+        android:layout_marginTop="72dp"
+        android:onClick="gotoHomeScreen"
+        android:text="Submit" />
+
+    <EditText
+        android:id="@+id/inchText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ageText"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/ageText"
         android:ems="10"
         android:hint="@string/inches"
         android:inputType="number" />
 
     <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imageView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginLeft="13dp"
-        android:text="Import from Facebook" />
-
-    <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView7"
-        android:layout_below="@+id/view1"
-        android:layout_marginTop="41dp"
+        android:layout_alignBaseline="@+id/feetText"
+        android:layout_alignBottom="@+id/feetText"
+        android:layout_alignLeft="@+id/textView3"
         android:text="Height" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/weightText"
+        android:layout_alignBottom="@+id/weightText"
+        android:layout_alignLeft="@+id/textView4"
+        android:text="Weight" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/ageText"
+        android:layout_alignBottom="@+id/ageText"
+        android:layout_toRightOf="@+id/relativeLayout1"
+        android:text="Age:" />
+
+    <EditText
+        android:id="@+id/feetText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ageText"
+        android:layout_below="@+id/ageText"
+        android:ems="10"
+        android:hint="@string/feet"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/weightText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/feetText"
+        android:layout_below="@+id/feetText"
+        android:layout_marginTop="26dp"
+        android:ems="10"
+        android:hint="@string/kgs"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>

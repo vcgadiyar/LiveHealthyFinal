@@ -2,12 +2,12 @@ package entities;
 
 public class ExerciseRecordEntity {
 	
-	String timestamp;
+	long timestamp;
 	int tot_calories;
-	int workoutid;
+	String workoutid;
 	int duration;
 	
-	public ExerciseRecordEntity(int workoutid, int duration, int tot_calories, String timestamp)
+	public ExerciseRecordEntity(String workoutid, int duration, int tot_calories, long timestamp)
 	{
 		this.workoutid = workoutid;
 		this.duration = duration;
@@ -15,7 +15,7 @@ public class ExerciseRecordEntity {
 		this.timestamp = timestamp;
 	}
 	
-	public void setWorkoutid(int workoutid)
+	public void setWorkoutid(String workoutid)
 	{
 		this.workoutid = workoutid;
 	}
@@ -30,12 +30,12 @@ public class ExerciseRecordEntity {
 		this.tot_calories = tot_calories;
 	}
 		
-	public void setTimestamp(String timestamp)
+	public void setTimestamp(long timestamp)
 	{
 		this.timestamp = timestamp;
 	}
 	
-	public int getWorkoutid()
+	public String getWorkoutName()
 	{
 		return this.workoutid;
 	}
@@ -50,7 +50,7 @@ public class ExerciseRecordEntity {
 		return this.tot_calories;
 	}
 		
-	public String getTimestamp()
+	public long getTimestamp()
 	{
 		return this.timestamp;
 	}

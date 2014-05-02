@@ -142,8 +142,10 @@ public FoodEntity getOneFoodFromBarCode(String bcode)
 		System.out.println("nameIndex:"+nameIndex+" calIndex:"+calIndex+" barindex:"+barindex);
 
 		String exName = result.getString(nameIndex);
+		
 		int calpermin = result.getInt(calIndex);
 		String barcode = result.getString(barindex);
+		System.out.println("Name ="+exName+" barcode="+barcode+" cals: "+calpermin);
 		e1 = new FoodEntity(exName, calpermin, barcode);
 	}
 	return e1;

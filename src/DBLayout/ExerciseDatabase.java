@@ -57,14 +57,14 @@ public void insertExercise(ExerciseEntity e)
 } // end method insertContact
 
 // inserts a new contact in the database
-public void updateExercise(int id, ExerciseEntity e) 
+public void updateExercise(ExerciseEntity e) 
 {
    ContentValues editExercise = new ContentValues();
    editExercise.put("name", e.getName());
    editExercise.put("caloriespermin", e.getCaloriesPerMin());
  
    open(); // open the database
-   database.update("ExerciseDetails", editExercise, "id=" + id, null);
+   database.update("ExerciseDetails", editExercise, "name=" + e.getName(), null);
    close(); // close the database
 } // end method updateContact
 
@@ -97,10 +97,10 @@ public ArrayList<ExerciseEntity> getAllExercises()
 
 // get a Cursor containing all information about the contact specified
 // by the given id
-public ExerciseEntity getOneExercise(int id) 
+public ExerciseEntity getOneExercise(String name) 
 {
-	Cursor result = database.query(
-      "ExerciseDetails", null, "id=" + id, null, null, null, null);
+	Cursor result = database.rawQuery
+			("SELECT * FROM ExerciseDetails WHERE name = '"+name.trim()+"' COLLATE NOCASE", null);
 	int nameIndex;
 	int calIndex;
 	ExerciseEntity e1 = null;
@@ -149,8 +149,7 @@ private class DatabaseOpenHelper extends SQLiteOpenHelper
    {
       // query to create a new table named contacts
       String createQuery = "CREATE TABLE ExerciseDetails" +
-         "(id integer primary key," +
-         "name TEXT, caloriespermin integer);";
+         "(name TEXT primary key, caloriespermin integer);";
                
       db.execSQL(createQuery); // execute the query
    } // end method onCreate

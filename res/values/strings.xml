@@ -30,25 +30,27 @@
     <color name="dark_blue">#00FF00</color>
     <color name="orange_col">#FFA500</color>
 
-    <!-- 	Activity_main -->
+    <!-- Activity_main -->
     <string name="rintake">Record Food Intake</string>
     <string name="rexercise">Record Exercise</string>
     <string name="vfood">View Food Database</string>
     <string name="vreports">View Reports/ Graphs</string>
     <string name="eprofile">Edit Profile</string>
     <string name="exit">Exit</string>
-    
-    <!-- 	Activity Reports Home -->
+
+    <!-- Activity Reports Home -->
     <string name="view_calcons">View Calorie Consumption</string>
     <string name="view_exercises">View Workout Chart</string>
     <string name="view_steptracker">View Step Tracker</string>
-    
-    <!--  	Record Exercise -->
-	<string name="workout_type">Workout Type</string>
-	<string name="caloriespermin">Calories (/min)</string>
-	<string name="workout_duration">Workout Duration</string>
-	<string name="total_cal_burnt">Total Calories Burnt</string>
-	<string name="pick_date">Pick Date</string>
-	<string name="pick_time">Pick Time</string>
-	<string name="rec_workout">Record Workout</string>
+
+    <!-- Record Exercise -->
+    <string name="workout_type">Workout Type</string>
+    <string name="caloriespermin">Calories (/min)</string>
+    <string name="workout_duration">Workout Duration</string>
+    <string name="total_cal_burnt">Total Calories Burnt</string>
+    <string name="pick_date">Pick Date</string>
+    <string name="pick_time">Pick Time</string>
+    <string name="rec_workout">Record Workout</string>
+    <string name="title_activity_add_food_item">AddFoodItem</string>
+
 </resources>

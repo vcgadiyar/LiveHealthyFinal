@@ -33,8 +33,6 @@
         <activity
             android:name="com.jsp.lh.WorkourChartActivity"
             android:label="@string/title_activity_workour_chart" >
-        
-            
         </activity>
         <activity
             android:name="com.jsp.lh.CaloriesChartActivity"
@@ -50,11 +48,16 @@
         </activity>
         <activity
             android:name="com.jsp.lh.RecordFoodActivity"
-            android:label="@string/title_activity_record_food" >
+            android:label="@string/title_activity_record_food"
+            android:configChanges="orientation|screenLayout|layoutDirection" >
         </activity>
         <activity
             android:name="com.jsp.lh.ProfileActivity"
             android:label="@string/title_activity_profile" >
+        </activity>
+        <activity
+            android:name="com.jsp.lh.AddFoodItem"
+            android:label="@string/title_activity_add_food_item" >
         </activity>
     </application>
 
