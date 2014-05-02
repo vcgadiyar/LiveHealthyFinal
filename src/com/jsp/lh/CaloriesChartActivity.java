@@ -61,24 +61,16 @@ public class CaloriesChartActivity extends Activity
     private XYPlot plot;
 
     private CheckBox series1CheckBox;
-    //private CheckBox series2CheckBox;
-    //private Spinner spRenderStyle, spSeriesSize;
     private Spinner spWidthStyle;
     private SeekBar sbFixedWidth, sbVariableWidth;
     
     private XYSeries series1;
-    //private XYSeries series2;
-    private enum SeriesSize {
-        TEN,
-        TWENTY,
-        SIXTY
-    }
 
     // Create a couple arrays of y-values to plot:
     Number[] series1Numbers10 = {2, null, 5, 2, 7, 4, 3, 7, 4, 5};
     Number[] series1Numbers20 = {2, null, 5, 2, 7, 4, 3, 7, 4, 5, 7, 4, 5, 8, 5, 3, 6, 3, 9, 3};
     Number[] series1Numbers60 = {2, null, 5, 2, 7, 4, 3, 7, 4, 5, 7, 4, 5, 8, 5, 3, 6, 3, 9, 3, 2, null, 5, 2, 7, 4, 3, 7, 4, 5, 7, 4, 5, 8, 5, 3, 6, 3, 9, 3, 2, null, 5, 2, 7, 4, 3, 7, 4, 5, 7, 4, 5, 8, 5, 3, 6, 3, 9, 3};
-    Number[] series1Numbers = series1Numbers10;
+    Number[] series1Numbers = series1Numbers60;
 
     private MyBarFormatter formatter1;
 

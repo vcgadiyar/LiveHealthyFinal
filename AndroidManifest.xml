@@ -48,8 +48,7 @@
         </activity>
         <activity
             android:name="com.jsp.lh.RecordFoodActivity"
-            android:label="@string/title_activity_record_food"
-            android:configChanges="orientation|screenLayout|layoutDirection" >
+            android:label="@string/title_activity_record_food" >
         </activity>
         <activity
             android:name="com.jsp.lh.ProfileActivity"
