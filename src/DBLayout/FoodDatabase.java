@@ -58,7 +58,7 @@ public void insertFood(FoodEntity f)
 } // end method insertContact
 
 // inserts a new contact in the database
-public void updateFood(int id, FoodEntity f) 
+public void updateFood(FoodEntity f) 
 {
    ContentValues editFood = new ContentValues();
    editFood.put("name", f.getName());
@@ -66,7 +66,7 @@ public void updateFood(int id, FoodEntity f)
    editFood.put("barcode", f.getBarcode());
  
    open(); // open the database
-   database.update("FoodDetails", editFood, "id=" + id, null);
+   database.update("FoodDetails", editFood, "name=" + f.getName(), null);
    close(); // close the database
 } // end method updateContact
 
@@ -160,16 +160,16 @@ public void removeAll()
 }
 
 // delete the contact specified by the given String name
-public void deleteFood(int id) 
+public void deleteFood(String name) 
 {
    open(); // open the database
-   database.delete("FoodDetails", "id=" + id, null);
+   database.delete("FoodDetails", "name=" + name, null);
    close(); // close the database
 } // end method deleteContact
 
 private class DatabaseOpenHelper extends SQLiteOpenHelper 
 {
-	SQLiteDatabase db1;
+
    // public constructor
    public DatabaseOpenHelper(Context context, String name,
       CursorFactory factory, int version) 
@@ -184,8 +184,7 @@ private class DatabaseOpenHelper extends SQLiteOpenHelper
    {
       // query to create a new table named contacts
       String createQuery = "CREATE TABLE FoodDetails" +
-         "(id integer primary key," +
-         "name TEXT, barcode TEXT, calories integer);";
+         "(name TEXT primary key, barcode TEXT, calories integer);";
                
       db.execSQL(createQuery); // execute the query
    } // end method onCreate

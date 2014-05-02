@@ -1,13 +1,16 @@
 package com.jsp.lh;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import entities.FoodEntity;
+import entities.FoodRecordEntity;
 import DBLayout.FoodDatabase;
+import DBLayout.FoodRecord;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -20,12 +23,15 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.os.Build;
 
@@ -42,13 +48,49 @@ public class RecordFoodActivity extends Activity {
 			getFragmentManager().beginTransaction()
 			.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		
 	}
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.record_food, menu);
+		
+
+	 	
+		EditText edit_Text = (EditText)findViewById(R.id.foodText);
+		edit_Text.setOnFocusChangeListener(new OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+			    if(hasFocus){
+			        Toast.makeText(getApplicationContext(), "got the focus", Toast.LENGTH_LONG).show();
+			    }else {
+			        Toast.makeText(getApplicationContext(), "lost the focus", Toast.LENGTH_LONG).show();
+			        FoodEntity fe = null;
+			        EditText edit_text1 = (EditText)findViewById(R.id.foodText);
+			        System.out.println("Word loooking for is "+edit_text1);
+			        String match = edit_text1.getText().toString();
+					FoodDatabase db = new FoodDatabase(RecordFoodActivity.this);
+			        db.open();
+			        
+					fe = db.getOneFood(match);
+					TextView calt = (TextView) findViewById(R.id.calText);
+					if (fe != null)
+					{
+
+						calt.setText(String.valueOf(fe.getCalories()));
+					}
+					else
+					{
+						calt.setText("Food not found");
+					}
+					db.close();
+			    }
+			   }
+			});
 		return true;
 	}
 
@@ -62,6 +104,55 @@ public class RecordFoodActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void recordEntry(View v)
+	{
+		//try {
+		EditText fname = (EditText)findViewById(R.id.foodText);
+		TextView cals = (TextView)findViewById(R.id.calText);
+		DatePicker dp = (DatePicker)findViewById(R.id.datePicker1);
+		TimePicker tp = (TimePicker)findViewById(R.id.timePicker1);
+		
+		
+		System.out.println("LOL Food name = "+fname.getText().toString()+" cals: "+cals.getText()+
+				" date: "+dp.getYear()+"/"+(dp.getMonth()+1)+"/"+dp.getDayOfMonth()+
+				" Time: "+tp.getCurrentHour()+":"+tp.getCurrentMinute());
+
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(dp.getYear(), dp.getMonth(), dp.getDayOfMonth(), 
+		             tp.getCurrentHour(), tp.getCurrentMinute(), 0);
+		long startTime = calendar.getTimeInMillis();
+		
+		FoodEntity fe = null;
+        EditText edit_text1 = (EditText)findViewById(R.id.foodText);
+
+        String match = edit_text1.getText().toString();
+        System.out.println("Word loooking for is "+match);
+		FoodDatabase db = new FoodDatabase(RecordFoodActivity.this);
+        db.open();
+        
+		fe = db.getOneFood(match);
+		TextView calt = (TextView) findViewById(R.id.calText);
+		if (fe != null)
+		{
+			System.out.println("Creating new fre "+fe.getName()+" time:"+startTime);
+			FoodRecordEntity fre = new FoodRecordEntity(fe.getName(), startTime, fe.getCalories());
+			FoodRecord frdb = new FoodRecord(RecordFoodActivity.this);
+			frdb.insertRecord(fre);
+		}
+		else
+		{
+			calt.setText("Food not found");
+		}
+		db.close();
+//		}
+//		
+//		catch (Exception e)
+//		{
+//			Toast.makeText(getApplicationContext(), "Kindly check the input entered", Toast.LENGTH_LONG).show();
+//		}		
 	}
 
 	/* Callback for Voice Button Click */
@@ -211,5 +302,5 @@ public class RecordFoodActivity extends Activity {
 			return rootView;
 		}
 	}
-
+	
 }

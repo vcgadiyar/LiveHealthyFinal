@@ -2,33 +2,45 @@ package entities;
 
 public class FoodRecordEntity {
 	
-	String timestamp;
-	int foodid;
+	long timestamp;
+	String foodname;
+	int calories;
 	
-	public FoodRecordEntity(int foodid, String timestamp)
+	public FoodRecordEntity(String foodid, long timestamp, int calories)
 	{
-		this.foodid = foodid;
+		this.foodname = foodid;
 		this.timestamp = timestamp;
+		this.calories = calories;
 	}
 	
-	public void setFoodid(int foodid)
+	public void setFoodName(String foodname)
 	{
-		this.foodid = foodid;
+		this.foodname = foodname;
+	}
+	
+	public void setCalories(int calories)
+	{
+		this.calories = calories;
 	}
 		
-	public void setTimestamp(String timestamp)
+	public void setTimestamp(long timestamp)
 	{
 		this.timestamp = timestamp;
 	}
 	
-	public int getFoodid()
+	public String getFoodName()
 	{
-		return this.foodid;
+		return this.foodname;
 	}
 
-	public String getTimestamp()
+	public long getTimestamp()
 	{
 		return this.timestamp;
+	}
+	
+	public int getCalories()
+	{
+		return this.calories;
 	}
 		
 }

@@ -35,6 +35,7 @@ public class MainActivity extends Activity {
 	void populateDatabase()
 	{
 		MainActivity.this.deleteDatabase("FoodDetails");
+		MainActivity.this.deleteDatabase("FoodRecord");
 		FoodEntity fe = new FoodEntity("coca cola", 100, "04900005010");
 		FoodEntity fe1 = new FoodEntity("pepsi", 200, "8906001055440");
 		FoodDatabase connector = new FoodDatabase(MainActivity.this);
@@ -107,7 +108,10 @@ public class MainActivity extends Activity {
 	}
 	
 	public void endApplication(View view) {
-		
+		FoodRecord fr = new FoodRecord(MainActivity.this);
+		fr.open();
+		fr.getRecordsPerDay();
+		fr.close();
 	}
 }
 
