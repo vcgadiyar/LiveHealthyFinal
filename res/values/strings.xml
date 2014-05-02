@@ -24,6 +24,12 @@
     <string name="Date">Date</string>
     <string name="record">Record</string>
     <string name="barcode">Scan using Barcode</string>
+    <string name="barcode1">Scan Barcode</string>
+    <string name="scan">Scan</string>
+     <string name="barcodeText">BarCode</string>
+    <string name="add_new_food">Add New Food Item</string>
+    
+    <string name="record_existing">Record Existing Food Item</string>
 
     <color name="l_blue">#ADD8E6</color>
     <color name="cyan_col">#00FFFF</color>
