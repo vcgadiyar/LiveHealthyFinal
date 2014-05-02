@@ -35,10 +35,10 @@ public class MainActivity extends Activity {
 	 */
 	void populateDatabase()
 	{
-		MainActivity.this.deleteDatabase("FoodDetails");
-		MainActivity.this.deleteDatabase("FoodRecord");
-		MainActivity.this.deleteDatabase("ExerciseDetails");
-		MainActivity.this.deleteDatabase("ExerciseRecord");
+//		MainActivity.this.deleteDatabase("FoodDetails");
+//		MainActivity.this.deleteDatabase("FoodRecord");
+//		MainActivity.this.deleteDatabase("ExerciseDetails");
+//		MainActivity.this.deleteDatabase("ExerciseRecord");
 		FoodEntity fe = new FoodEntity("coca cola", 100, "04900005010");
 		FoodEntity fe1 = new FoodEntity("pepsi", 200, "8906001055440");
 		FoodEntity fe2 = new FoodEntity("mountain dew", 300, "01213104");
@@ -121,10 +121,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void endApplication(View view) {
-		FoodRecord fr = new FoodRecord(MainActivity.this);
-		fr.open();
-		fr.getRecordsPerDay();
-		fr.close();
+		
 	}
 }
 

@@ -20,22 +20,24 @@ import java.text.DateFormatSymbols;
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 
+import DBLayout.FoodRecord;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 
@@ -45,11 +47,16 @@ import com.androidplot.ui.SeriesRenderer;
 import com.androidplot.ui.SizeLayoutType;
 import com.androidplot.ui.SizeMetrics;
 import com.androidplot.ui.TextOrientationType;
-import com.androidplot.ui.widget.TextLabelWidget;
-import com.androidplot.util.PixelUtils;
-import com.androidplot.xy.*;
 import com.androidplot.ui.XLayoutStyle;
 import com.androidplot.ui.YLayoutStyle;
+import com.androidplot.ui.widget.TextLabelWidget;
+import com.androidplot.util.PixelUtils;
+import com.androidplot.xy.BarFormatter;
+import com.androidplot.xy.BarRenderer;
+import com.androidplot.xy.BoundaryMode;
+import com.androidplot.xy.SimpleXYSeries;
+import com.androidplot.xy.XYPlot;
+import com.androidplot.xy.XYSeries;
 
 /**
  * The simplest possible example of using AndroidPlot to plot some data.
@@ -60,18 +67,21 @@ public class CaloriesChartActivity extends Activity
     private static final String NO_SELECTION_TXT = "Touch bar to select.";
     private XYPlot plot;
 
-    private CheckBox series1CheckBox;
+    //private CheckBox series1CheckBox;
     private Spinner spWidthStyle;
     private SeekBar sbFixedWidth, sbVariableWidth;
     
+    LinkedHashMap<String, Integer> entries;
+    
     private XYSeries series1;
+    FoodRecord fr;
 
     // Create a couple arrays of y-values to plot:
     Number[] series1Numbers10 = {2, null, 5, 2, 7, 4, 3, 7, 4, 5};
     Number[] series1Numbers20 = {2, null, 5, 2, 7, 4, 3, 7, 4, 5, 7, 4, 5, 8, 5, 3, 6, 3, 9, 3};
     Number[] series1Numbers60 = {2, null, 5, 2, 7, 4, 3, 7, 4, 5, 7, 4, 5, 8, 5, 3, 6, 3, 9, 3, 2, null, 5, 2, 7, 4, 3, 7, 4, 5, 7, 4, 5, 8, 5, 3, 6, 3, 9, 3, 2, null, 5, 2, 7, 4, 3, 7, 4, 5, 7, 4, 5, 8, 5, 3, 6, 3, 9, 3};
-    Number[] series1Numbers = series1Numbers60;
-
+    Number[] series1Numbers = series1Numbers20;
+    
     private MyBarFormatter formatter1;
 
     private MyBarFormatter selectionFormatter;
@@ -86,6 +96,23 @@ public class CaloriesChartActivity extends Activity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calories_chart);
+        
+        
+        fr = new FoodRecord(CaloriesChartActivity.this);
+    	fr.open();
+    	
+    	entries = fr.getRecordsPerDay();
+    	
+    	Log.d("anavgire", "graph calorie count\n");
+    	
+    	ArrayList<Number> my_values = new ArrayList<Number>();
+    	for (String key : entries.keySet()) {
+    		Log.d("anavgire", "key = " + key + " value = " + entries.get(key) + "\n");
+    		my_values.add(entries.get(key));
+    	}
+    	
+    	series1Numbers = my_values.toArray(new Number[0]);
+    	fr.close();
 
         // initialize our XYPlot reference:
         plot = (XYPlot) findViewById(R.id.mySimpleXYPlot);
@@ -138,10 +165,10 @@ public class CaloriesChartActivity extends Activity
         ArrayAdapter <BarRenderer.BarWidthStyle> adapter1 = new ArrayAdapter <BarRenderer.BarWidthStyle> (this, android.R.layout.simple_spinner_item, BarRenderer.BarWidthStyle.values() );
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spWidthStyle.setAdapter(adapter1);
-        spWidthStyle.setSelection(BarRenderer.BarWidthStyle.FIXED_WIDTH.ordinal());
+        spWidthStyle.setSelection(BarRenderer.BarWidthStyle.VARIABLE_WIDTH.ordinal());
         spWidthStyle.setOnItemSelectedListener(new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> arg0, View arg1,int arg2, long arg3) {
-            	if (BarRenderer.BarWidthStyle.FIXED_WIDTH.equals(spWidthStyle.getSelectedItem())) {
+            	if (BarRenderer.BarWidthStyle.VARIABLE_WIDTH.equals(spWidthStyle.getSelectedItem())) {
             		sbFixedWidth.setVisibility(View.VISIBLE);
             		sbVariableWidth.setVisibility(View.INVISIBLE);
             	} else {
@@ -187,9 +214,12 @@ public class CaloriesChartActivity extends Activity
         plot.setDomainValueFormat(new NumberFormat() {
             @Override
             public StringBuffer format(double value, StringBuffer buffer, FieldPosition field) {
-                int year = (int) (value + 0.5d) / 12;
-                int month = (int) ((value + 0.5d) % 12);
-                return new StringBuffer(DateFormatSymbols.getInstance().getShortMonths()[month] + " '0" + year);
+            	String key = (String) entries.keySet().toArray()[(int)value];
+            	
+            	return new StringBuffer(key);
+//            	int year = (int) (value + 0.5d) / 12;
+//                int month = (int) ((value + 0.5d) % 12);
+//                return new StringBuffer(DateFormatSymbols.getInstance().getShortMonths()[month] + " '0" + year);
             }
 
             @Override

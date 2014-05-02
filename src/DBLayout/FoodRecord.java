@@ -104,9 +104,10 @@ public class FoodRecord
 	public LinkedHashMap<String, Integer> getRecordsPerDay() 
 	{
 		Cursor result = database.rawQuery("SELECT SUM(calories) as sum_cal, "
-				+ "strftime('%d-%m-%Y',(\"timestamp\"-14400000)/1000,'unixepoch') as "
+				+ "strftime('%Y-%m-%d',(\"timestamp\"-14400000)/1000,'unixepoch') as "
 				+ "my_date from FoodRecord group by "
-				+ "strftime('%d-%m-%Y',(\"timestamp\"-14400000)/1000,'unixepoch')", null);
+				+ "strftime('%Y-%m-%d',(\"timestamp\"-14400000)/1000,'unixepoch') "
+				+ "order by strftime('%Y-%m-%d',(\"timestamp\"-14400000)/1000,'unixepoch')", null);
 
 		LinkedHashMap<String, Integer> calsPerDay = new LinkedHashMap<String, Integer>();
 
@@ -125,6 +126,7 @@ public class FoodRecord
 
 				// fill TextViews with the retrieved data
 
+				
 				System.out.println(" Date: "+result.getString(tsIndex)+" Calories Consumed: "+result.getInt(sumindex));
 				calsPerDay.put(result.getString(tsIndex), result.getInt(sumindex));
 
