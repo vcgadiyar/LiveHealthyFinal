@@ -1,27 +1,50 @@
 package com.jsp.lh;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import entities.FoodEntity;
+
+import DBLayout.FoodDatabase;
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class FoodDetailsActivity extends Activity {
 
+	FoodDatabase fd;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_food_details);
+		
+	    final ListView listview = (ListView) findViewById(R.id.listview);
+	    String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+	        "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+	        "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
+	        "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
+	        "Android", "iPhone", "WindowsMobile" };
+	    
+	    
+	    fd = new FoodDatabase(FoodDetailsActivity.this);
+	    fd.open();
+	    ArrayList<FoodEntity> foods = fd.getAllFoods();
+	    fd.close();
 
-		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
+	    final ArrayList<String> list = new ArrayList<String>();
+	    for (FoodEntity food : foods) {
+	      list.add(food.getCalories() + "\t\t" + food.getName());
+	    }
+	    final StableArrayAdapter adapter = new StableArrayAdapter(this,
+	        android.R.layout.simple_list_item_1, list);
+	    listview.setAdapter(adapter);
+
 	}
 
 	@Override
@@ -44,21 +67,28 @@ public class FoodDetailsActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
+	private class StableArrayAdapter extends ArrayAdapter<String> {
 
-		public PlaceholderFragment() {
-		}
+	    HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
 
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_food_details,
-					container, false);
-			return rootView;
-		}
-	}
+	    public StableArrayAdapter(Context context, int textViewResourceId,
+	        List<String> objects) {
+	      super(context, textViewResourceId, objects);
+	      for (int i = 0; i < objects.size(); ++i) {
+	        mIdMap.put(objects.get(i), i);
+	      }
+	    }
 
+	    @Override
+	    public long getItemId(int position) {
+	      String item = getItem(position);
+	      return mIdMap.get(item);
+	    }
+
+	    @Override
+	    public boolean hasStableIds() {
+	      return true;
+	    }
+
+	  }
 }
