@@ -114,41 +114,39 @@ public class CaloriesChartActivity extends Activity {
 
 		Log.d("anavgire", "graph calorie count\n");
 
-		
-
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		// Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600
 		// * 1000 );
 		Date startDate, endDate;
 		Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
-		
+
 		try {
 			startDate = dateFormat
 					.parse((String) entries.keySet().toArray()[0]);
 
-			//start = Calendar.getInstance();
-			//end = Calendar.getInstance();
+			// start = Calendar.getInstance();
+			// end = Calendar.getInstance();
 
 			endDate = new Date(System.currentTimeMillis());
-			
-			
-			Date minStartDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
-			if(startDate.after(minStartDate)) {
+
+			Date minStartDate = new Date(System.currentTimeMillis() - 7L * 24
+					* 3600 * 1000);
+			if (startDate.after(minStartDate)) {
 				startDate = minStartDate;
 			}
 
-			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
+			startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600
+					* 1000);
 			endDate = new Date(System.currentTimeMillis());
-					
+
 		}
 
 		start.setTime(startDate);
 		end.setTime(endDate);
-		
+
 		Log.d("anavgire", "Start date = " + dateFormat.format(startDate));
 		Log.d("anavgire", "End date = " + dateFormat.format(endDate));
 
@@ -446,19 +444,20 @@ public class CaloriesChartActivity extends Activity {
 			}
 		}
 	}
-	
-	public static <K extends Comparable,V extends Comparable> Map<K,V> sortByKeys(Map<K,V> map){
-        List<K> keys = new LinkedList<K>(map.keySet());
-        Collections.sort(keys);
-      
-        //LinkedHashMap will keep the keys in the order they are inserted
-        //which is currently sorted on natural ordering
-        Map<K,V> sortedMap = new LinkedHashMap<K,V>();
-        for(K key: keys){
-            sortedMap.put(key, map.get(key));
-        }
-      
-        return sortedMap;
-    }
+
+	public static <K extends Comparable, V extends Comparable> Map<K, V> sortByKeys(
+			Map<K, V> map) {
+		List<K> keys = new LinkedList<K>(map.keySet());
+		Collections.sort(keys);
+
+		// LinkedHashMap will keep the keys in the order they are inserted
+		// which is currently sorted on natural ordering
+		Map<K, V> sortedMap = new LinkedHashMap<K, V>();
+		for (K key : keys) {
+			sortedMap.put(key, map.get(key));
+		}
+
+		return sortedMap;
+	}
 
 }
