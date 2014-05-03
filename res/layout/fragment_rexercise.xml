@@ -52,6 +52,13 @@
                         android:src="@android:drawable/presence_audio_online"
                         android:onClick="onSpeak" />
 
+                    <Button
+                        android:id="@+id/add_workout_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_workout"
+                        android:onClick="addWorkout" />
+
                 </TableRow>
 
                 <TableRow

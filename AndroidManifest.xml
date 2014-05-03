@@ -58,6 +58,10 @@
             android:name="com.jsp.lh.AddFoodItem"
             android:label="@string/title_activity_add_food_item" >
         </activity>
+        <activity
+            android:name="com.jsp.lh.AddWorkoutActivity"
+            android:label="@string/title_activity_add_workout" >
+        </activity>
     </application>
 
 </manifest>

@@ -26,9 +26,10 @@
     <string name="barcode">Scan using Barcode</string>
     <string name="barcode1">Scan Barcode</string>
     <string name="scan">Scan</string>
-     <string name="barcodeText">BarCode</string>
+    <string name="barcodeText">BarCode</string>
     <string name="add_new_food">Add New Food Item</string>
-    
+    <string name="add_workout">Add Workout</string>
+    <string name="add_workout_name">Add Workout Name</string>
     <string name="record_existing">Record Existing Food Item</string>
 
     <color name="l_blue">#ADD8E6</color>
@@ -58,5 +59,6 @@
     <string name="pick_time">Pick Time</string>
     <string name="rec_workout">Record Workout</string>
     <string name="title_activity_add_food_item">AddFoodItem</string>
+    <string name="title_activity_add_workout">AddWorkoutActivity</string>
 
 </resources>

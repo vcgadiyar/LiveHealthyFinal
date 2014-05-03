@@ -44,6 +44,12 @@ public class RExerciseActivity extends Activity {
 			.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 	}
+	
+	public void addWorkout(View v)
+	{
+		Intent intent = new Intent(this, AddWorkoutActivity.class);
+	    startActivity(intent);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
