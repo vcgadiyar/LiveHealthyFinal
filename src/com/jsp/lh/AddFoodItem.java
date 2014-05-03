@@ -2,6 +2,7 @@ package com.jsp.lh;
 
 import java.util.ArrayList;
 
+import com.androidplot.xy.BarRenderer.BarComparator;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -34,7 +35,7 @@ public class AddFoodItem extends Activity {
 
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+			.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 	}
 
@@ -74,7 +75,7 @@ public class AddFoodItem extends Activity {
 			return rootView;
 		}
 	}
-	
+
 	/* Callback for Voice Button Click */
 	public void onSpeak(View v)
 	{
@@ -86,7 +87,7 @@ public class AddFoodItem extends Activity {
 		IntentIntegrator scanIntegrator = new IntentIntegrator(this);
 		scanIntegrator.initiateScan();
 	}
-	
+
 	/**
 	 * Fire an intent to start the voice recognition activity.
 	 */
@@ -98,6 +99,45 @@ public class AddFoodItem extends Activity {
 				RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 		intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Voice recognition Demo...");
 		startActivityForResult(intent, VOICE_REQUEST_CODE);
+	}
+
+	public void recordEntry(View v)
+	{
+		try {
+			EditText fname = (EditText)findViewById(R.id.foodText1);
+			EditText cal = (EditText)findViewById(R.id.calText1);
+			EditText bcode = (EditText)findViewById(R.id.barcodeText);
+
+			String ftext = fname.getText().toString();
+			String caltext = cal.getText().toString();
+			String btext = bcode.getText().toString();
+
+
+			if (ftext.matches("") || caltext.matches("") || btext.matches(""))
+			{
+				Toast toast = Toast.makeText(getApplicationContext(), 
+						"Kindly check Input entered!", Toast.LENGTH_SHORT);
+				toast.show();
+			}
+			else
+			{
+				FoodEntity fe = new FoodEntity(ftext, Integer.parseInt(caltext), btext);
+				FoodDatabase connector = new FoodDatabase(AddFoodItem.this);
+				connector.insertFood(fe);
+				Toast toast = Toast.makeText(getApplicationContext(), 
+						"Successfully inserted record!", Toast.LENGTH_SHORT);
+				toast.show();
+				fname.setText("");
+				cal.setText("");
+				bcode.setText("");
+			}
+		}
+		catch (Exception e)
+		{
+			Toast toast = Toast.makeText(getApplicationContext(), 
+					"Kindly check Input entered!", Toast.LENGTH_SHORT);
+			toast.show();
+		}
 	}
 
 	/**
@@ -123,15 +163,17 @@ public class AddFoodItem extends Activity {
 			}
 			super.onActivityResult(requestCode, resultCode, data);
 
-			EditText text3 = (EditText) findViewById(R.id.foodText);
+			EditText text3 = (EditText) findViewById(R.id.foodText1);
 
 			if (matchedWord != null)
 			{
-				
+				text3.setText(matchedWord);
 			}
 			else
 			{
-				text3.setText("No Match");
+				Toast toast = Toast.makeText(getApplicationContext(), 
+						"No Voice data received!", Toast.LENGTH_SHORT);
+				toast.show();
 			}
 		}
 
@@ -143,15 +185,16 @@ public class AddFoodItem extends Activity {
 				//we have a result
 				String scanContent = scanningResult.getContents();
 				String scanFormat = scanningResult.getFormatName();
+				EditText barText = (EditText)findViewById(R.id.barcodeText);
 				if (scanContent == null)
-				{
-					System.out.println("ScanContent is null");
-				}
-				else
 				{
 					Toast toast = Toast.makeText(getApplicationContext(), 
 							"No scan data received!", Toast.LENGTH_SHORT);
 					toast.show();
+				}
+				else
+				{
+					barText.setText(scanContent);
 				}
 
 			}

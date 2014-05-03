@@ -42,7 +42,7 @@
                         android:text="@string/food_name" />
 
                     <EditText
-                        android:id="@+id/foodText"
+                        android:id="@+id/foodText1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10" />
@@ -79,7 +79,7 @@
                         android:text="@string/Calories" />
 
                     <EditText
-                        android:id="@+id/editText1"
+                        android:id="@+id/calText1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -118,7 +118,7 @@
            android:layout_below="@+id/scrollView1"
            android:layout_marginTop="69dp"
            android:onClick="recordEntry"
-           android:text="@string/record" />
+           android:text="@string/add_new_food" />
 
        <TextView
            android:id="@+id/barcodetext"
@@ -130,7 +130,7 @@
            android:text="@string/barcodeText" />
 
        <EditText
-           android:id="@+id/editText2"
+           android:id="@+id/barcodeText"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_alignBaseline="@+id/barcodetext"
@@ -147,7 +147,7 @@
            android:layout_height="wrap_content"
            android:layout_below="@+id/scrollView1"
            android:layout_marginLeft="15dp"
-           android:layout_toRightOf="@+id/editText2"
+           android:layout_toRightOf="@+id/barcodeText"
            android:onClick="onScan"
            android:text="@string/barcode1" />
    
