@@ -51,20 +51,7 @@
                 android:onClick="viewExercise"
                 android:text="@string/view_exercises" />
 
-            <ImageView
-                android:id="@+id/image3"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight=".3"
-                android:src="@drawable/steps" />
-
-            <Button
-                android:id="@+id/view_steptracker_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:onClick="viewStepTracker"
-                android:text="@string/view_steptracker" />
+            
         </LinearLayout>
     </ScrollView>
 

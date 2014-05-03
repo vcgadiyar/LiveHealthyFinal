@@ -39,23 +39,24 @@ public class MainActivity extends Activity {
 //		MainActivity.this.deleteDatabase("FoodRecord");
 //		MainActivity.this.deleteDatabase("ExerciseDetails");
 //		MainActivity.this.deleteDatabase("ExerciseRecord");
-		FoodEntity fe = new FoodEntity("coca cola", 100, "04900005010");
-		FoodEntity fe1 = new FoodEntity("pepsi", 200, "8906001055440");
-		FoodEntity fe2 = new FoodEntity("mountain dew", 300, "01213104");
-		FoodDatabase connector = new FoodDatabase(MainActivity.this);
+//		FoodEntity fe = new FoodEntity("coca cola", 100, "04900005010");
+//		FoodEntity fe1 = new FoodEntity("pepsi", 200, "8906001055440");
+//		FoodEntity fe2 = new FoodEntity("mountain dew", 300, "01213104");
+//		FoodDatabase connector = new FoodDatabase(MainActivity.this);
+//		
+//		connector.insertFood(fe);
 		
-		connector.insertFood(fe);
-		connector.insertFood(fe1);
-		connector.insertFood(fe2);
-		
-		ExerciseEntity e1 = new ExerciseEntity("push up", 20);
-		ExerciseEntity e2 = new ExerciseEntity("stretch", 15);
-		ExerciseEntity e3 = new ExerciseEntity("treadmill", 30);
-		ExerciseDatabase ed = new ExerciseDatabase(MainActivity.this);
-		
-		ed.insertExercise(e1);
-		ed.insertExercise(e2);
-		ed.insertExercise(e3);		
+//		connector.insertFood(fe1);
+//		connector.insertFood(fe2);
+//		
+//		ExerciseEntity e1 = new ExerciseEntity("push up", 20);
+//		ExerciseEntity e2 = new ExerciseEntity("stretch", 15);
+//		ExerciseEntity e3 = new ExerciseEntity("treadmill", 30);
+//		ExerciseDatabase ed = new ExerciseDatabase(MainActivity.this);
+//		
+//		ed.insertExercise(e1);
+//		ed.insertExercise(e2);
+//		ed.insertExercise(e3);		
 	}
 	
 	@Override

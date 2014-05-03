@@ -25,7 +25,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
-        androidPlot.domainLabel="Month"
+        androidPlot.domainLabel="Date"
         androidPlot.domainLabelWidget.labelPaint.textSize="@dimen/domain_label_font_size"
         androidPlot.graphWidget.domainGridLinePaint.alpha="0"
         androidPlot.graphWidget.domainLabelPaint.textSize="@dimen/domain_tick_label_font_size"
@@ -44,7 +44,7 @@
         androidPlot.legendWidget.iconSizeMetrics.widthMetric.value="15dp"
         androidPlot.legendWidget.positionMetrics.anchor="right_bottom"
         androidPlot.legendWidget.textPaint.textSize="@dimen/legend_text_font_size"
-        androidPlot.rangeLabel="Revenue (millions)"
+        androidPlot.rangeLabel="Calories Intake (Calories)"
         androidPlot.rangeLabelWidget.labelPaint.textSize="@dimen/range_label_font_size"
         androidPlot.title="Growth"
         androidPlot.titleWidget.labelPaint.textSize="@dimen/title_font_size" />
@@ -64,6 +64,7 @@
         <RelativeLayout
             android:id="@+id/sectionGraph"
             android:layout_width="fill_parent"
+            android:visibility="invisible"
             android:layout_height="wrap_content" >
 
             <SeekBar

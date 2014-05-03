@@ -138,9 +138,9 @@ public class ExerciseRecord
 	public LinkedHashMap<String, Integer> getRecordsPerDay() 
 	{
 		Cursor result = database.rawQuery("SELECT SUM(tot_calories) as sum_cal, "
-				+ "strftime('%d-%m-%Y',(\"timestamp\"-14400000)/1000,'unixepoch') as "
+				+ "strftime('%Y-%m-%d',(\"timestamp\"-14400000)/1000,'unixepoch') as "
 				+ "my_date from ExerciseRecord group by "
-				+ "strftime('%d-%m-%Y',(\"timestamp\"-14400000)/1000,'unixepoch')", null);
+				+ "strftime('%Y-%m-%d',(\"timestamp\"-14400000)/1000,'unixepoch')", null);
 
 		LinkedHashMap<String, Integer> calsPerDay = new LinkedHashMap<String, Integer>();
 
