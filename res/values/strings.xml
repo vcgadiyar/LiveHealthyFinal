@@ -44,6 +44,7 @@
     <string name="vreports">View Reports/ Graphs</string>
     <string name="eprofile">Edit Profile</string>
     <string name="exit">Exit</string>
+    <string name="edit_pic">Edit Picture</string>
 
     <!-- Activity Reports Home -->
     <string name="view_calcons">View Calorie Consumption</string>

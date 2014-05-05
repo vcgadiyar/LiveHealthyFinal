@@ -1,5 +1,9 @@
 package entities;
 
+import com.jsp.lh.ImageUtils;
+
+import android.graphics.drawable.Drawable;
+
 public class UserEntity {
 	
 	String fname;
@@ -8,6 +12,7 @@ public class UserEntity {
 	int hft;
 	int hinch;
 	int weight;
+	String pictureDataDrawable;
 	
 	public UserEntity(String fname, String lname, int age, int hft, int hinch, int weight)
 	{
@@ -76,5 +81,14 @@ public class UserEntity {
 	{
 		return this.weight;
 	}
+	
+	public void setPictureData(String fileuri) {
+       pictureDataDrawable = fileuri;
+    }
+
+    public String getPictureData(){
+        return pictureDataDrawable;
+    }
+
 	
 }

@@ -1,5 +1,6 @@
 package com.jsp.lh;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,6 +12,8 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -42,6 +45,7 @@ public class ProfileActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		
 	}
 	
 	public void startCam(View v)
@@ -67,6 +71,7 @@ public class ProfileActivity extends Activity {
 		EditText ft = (EditText)findViewById(R.id.feetText);
 		EditText inch = (EditText)findViewById(R.id.inchText);
 		EditText weight = (EditText)findViewById(R.id.weightText);
+		ImageView im = (ImageView)findViewById(R.id.imageView1);
 		
 		String fname = fn.getText().toString();
 		String lname = ln.getText().toString();
@@ -87,8 +92,16 @@ public class ProfileActivity extends Activity {
 			int feetreq = Integer.parseInt(feet);
 			int inchreq = Integer.parseInt(inchtext);
 			int weightreq = Integer.parseInt(wttext);
-			
+		
 			UserEntity ue = new UserEntity(fname, lname, agereq, feetreq, inchreq, weightreq);
+			if (fileUri != null)
+			{
+				ue.setPictureData(fileUri.getEncodedPath());
+			}
+			else
+			{
+				ue.setPictureData("");
+			}
 			
 			UserProfile con = new UserProfile(ProfileActivity.this);
 			
@@ -133,6 +146,7 @@ public class ProfileActivity extends Activity {
 		con1.open();
 		
 		UserEntity ret1 = con1.getOneUser(1);
+		
 		con1.close();
 		if (ret1 != null)
 		{
@@ -142,6 +156,15 @@ public class ProfileActivity extends Activity {
 			ft.setText(String.valueOf(ret1.getHft()));
 			inch.setText(String.valueOf(ret1.getHinch()));
 			weight.setText(String.valueOf(ret1.getWeight()));
+			
+			if (!ret1.getPictureData().matches(""))
+			{
+			String path = ret1.getPictureData();
+            ImageView im = (ImageView)findViewById(R.id.imageView1);
+            Bitmap image = BitmapFactory.decodeFile(path);
+            im.setImageBitmap(image);
+			}
+			
 		}
 		return true;
 	}

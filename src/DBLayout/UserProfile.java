@@ -53,6 +53,7 @@ public class UserProfile
 		newUser.put("hft", u.getHft());
 		newUser.put("hinch", u.getHinch());
 		newUser.put("weight", u.getWeight());
+		newUser.put("pictureData", u.getPictureData());
 
 		open(); // open the database
 		database.insert("UserProfile", null, newUser);
@@ -69,6 +70,7 @@ public class UserProfile
 		editUser.put("hft", u.getHft());
 		editUser.put("hinch", u.getHinch());
 		editUser.put("weight", u.getWeight());
+		editUser.put("pictureData", u.getPictureData());
 
 		open(); // open the database
 		database.update("UserProfile", editUser, "id=" + id, null);
@@ -123,6 +125,7 @@ public class UserProfile
 		int hftIndex;
 		int hinchIndex;
 		int wtIndex;
+		int picIndex;
 
 		UserEntity e1 = null;
 		if( result != null && result.moveToFirst() )
@@ -133,11 +136,13 @@ public class UserProfile
 			hftIndex = result.getColumnIndex("hft");
 			hinchIndex = result.getColumnIndex("hinch");
 			wtIndex = result.getColumnIndex("weight");
+			picIndex = result.getColumnIndex("pictureData");
 			// fill TextViews with the retrieved data
 
 			e1 = new UserEntity(result.getString(fnameIndex), result.getString(lnameIndex),
 					result.getInt(ageIndex), result.getInt(hftIndex), result.getInt(hinchIndex),
 					result.getInt(wtIndex));
+			e1.setPictureData(result.getString(picIndex));
 
 			result.moveToNext();
 
@@ -179,7 +184,7 @@ public class UserProfile
 			// query to create a new table named contacts
 			String createQuery = "CREATE TABLE UserProfile" +
 					"(id integer primary key," +
-					"fname TEXT, lname TEXT, age integer,  hft integer, hinch integer, weight integer);";
+					"fname TEXT, lname TEXT, age integer,  hft integer, hinch integer, weight integer, pictureData TEXT);";
 
 			db.execSQL(createQuery); // execute the query
 		} // end method onCreate

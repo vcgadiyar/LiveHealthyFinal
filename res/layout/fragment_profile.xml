@@ -156,9 +156,9 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/inchText"
-        android:layout_below="@+id/textView2"
-        android:text="Button"
-        android:onClick="startCam" />
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignRight="@+id/imageView1"
+        android:onClick="startCam"
+        android:text="@string/edit_pic" />
 
 </RelativeLayout>

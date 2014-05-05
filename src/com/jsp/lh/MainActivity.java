@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
 	 */
 	void populateDatabase()
 	{
-//		MainActivity.this.deleteDatabase("FoodDetails");
+//	MainActivity.this.deleteDatabase("UserProfile");
 //		MainActivity.this.deleteDatabase("FoodRecord");
 //		MainActivity.this.deleteDatabase("ExerciseDetails");
 //		MainActivity.this.deleteDatabase("ExerciseRecord");
