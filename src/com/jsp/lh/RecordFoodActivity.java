@@ -27,10 +27,12 @@ import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -41,6 +43,7 @@ public class RecordFoodActivity extends Activity {
 	private static final int VOICE_REQUEST_CODE = 1234;
 	public static final int SCAN_REQUEST_CODE = 0x0000c0de;
 	public static String cal_value = "--";
+	private AutoCompleteTextView mactv;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -101,6 +104,29 @@ public class RecordFoodActivity extends Activity {
 			});
 		TextView calText = (TextView)findViewById(R.id.calText);
 		calText.setText(cal_value);
+		
+		FoodDatabase fd = new FoodDatabase(RecordFoodActivity.this);
+		   fd.open();
+		   ArrayList<String> ar = new ArrayList<String>();
+		   ar = fd.getAllFoodNames();
+		   fd.close();
+		
+		String[] countries = new String[ar.size()];
+		countries = ar.toArray(countries);
+				   ArrayAdapter adapter = new ArrayAdapter
+				   (this,android.R.layout.simple_list_item_1,countries);
+
+
+				   
+				   mactv = (AutoCompleteTextView) findViewById
+				   (R.id.foodText);
+
+				   mactv.setAdapter(adapter);
+				   
+				   
+				   
+
+				   //mactv.setTokenizer(new MultiAutoCompleteTextView);
 		
 		return true;
 	}

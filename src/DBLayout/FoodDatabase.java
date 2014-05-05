@@ -117,6 +117,26 @@ public class FoodDatabase {
 		}
 		return e1;
 	} // end method getOnContact
+	
+	public ArrayList<String> getAllFoodNames()
+	{
+		Cursor result = database.rawQuery(
+				"SELECT * FROM FoodDetails", null);
+		int nameIndex;
+		ArrayList<String> ar = new ArrayList<String>();
+		if (result != null && result.moveToFirst()) {
+			while (result.isAfterLast() == false) {
+				nameIndex = result.getColumnIndex("name");
+				
+				String exName = result.getString(nameIndex);
+				
+				ar.add(exName);
+				result.moveToNext();
+			}
+		}
+		return ar;
+		
+	}
 
 	public FoodEntity getOneFoodFromBarCode(String bcode) {
 		Cursor result = database.rawQuery(
