@@ -115,18 +115,12 @@ public class RecordFoodActivity extends Activity {
 		countries = ar.toArray(countries);
 				   ArrayAdapter adapter = new ArrayAdapter
 				   (this,android.R.layout.simple_list_item_1,countries);
-
-
 				   
 				   mactv = (AutoCompleteTextView) findViewById
 				   (R.id.foodText);
+				   mactv.setThreshold(1);
 
 				   mactv.setAdapter(adapter);
-				   
-				   
-				   
-
-				   //mactv.setTokenizer(new MultiAutoCompleteTextView);
 		
 		return true;
 	}
