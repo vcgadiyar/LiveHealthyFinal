@@ -47,12 +47,10 @@ import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.FloatMath;
 import android.util.Log;
 import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -79,16 +77,13 @@ import com.androidplot.xy.XYSeries;
 /**
  * The simplest possible example of using AndroidPlot to plot some data.
  */
-public class CaloriesChartActivity extends Activity implements OnTouchListener {
+public class CaloriesChartActivity extends Activity {
 
 	private static final String NO_SELECTION_TXT = "Touch bar to select.";
-	private XYPlot mySimpleXYPlot;
+	private XYPlot plot;
 	Bitmap myBitmap;
 	String filePath;
-
-	private PointF minXY;
-	private PointF maxXY;
-
+	
 	// private CheckBox series1CheckBox;
 	private Spinner spWidthStyle;
 	private SeekBar sbFixedWidth, sbVariableWidth;
@@ -188,16 +183,14 @@ public class CaloriesChartActivity extends Activity implements OnTouchListener {
 		fr.close();
 
 		// initialize our XYPlot reference:
-		mySimpleXYPlot = (XYPlot) findViewById(R.id.mySimpleXYPlot);
-		mySimpleXYPlot.setOnTouchListener(this);
+		plot = (XYPlot) findViewById(R.id.mySimpleXYPlot);
 
 		formatter1 = new MyBarFormatter(Color.argb(200, 100, 150, 100),
 				Color.LTGRAY);
 		selectionFormatter = new MyBarFormatter(Color.YELLOW, Color.WHITE);
 
-		selectionWidget = new TextLabelWidget(
-				mySimpleXYPlot.getLayoutManager(), NO_SELECTION_TXT,
-				new SizeMetrics(PixelUtils.dpToPix(100),
+		selectionWidget = new TextLabelWidget(plot.getLayoutManager(),
+				NO_SELECTION_TXT, new SizeMetrics(PixelUtils.dpToPix(100),
 						SizeLayoutType.ABSOLUTE, PixelUtils.dpToPix(100),
 						SizeLayoutType.ABSOLUTE),
 				TextOrientationType.HORIZONTAL);
@@ -216,11 +209,22 @@ public class CaloriesChartActivity extends Activity implements OnTouchListener {
 		selectionWidget.pack();
 
 		// reduce the number of range labels
-		mySimpleXYPlot.setTicksPerRangeLabel(3);
-		mySimpleXYPlot.setRangeLowerBoundary(0, BoundaryMode.FIXED);
-		mySimpleXYPlot.getGraphWidget().setGridPadding(30, 10, 30, 0);
+		plot.setTicksPerRangeLabel(3);
+		plot.setRangeLowerBoundary(0, BoundaryMode.FIXED);
+		plot.getGraphWidget().setGridPadding(30, 10, 30, 0);
 
-		mySimpleXYPlot.setTicksPerDomainLabel(2);
+		plot.setTicksPerDomainLabel(2);
+
+		plot.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View view, MotionEvent motionEvent) {
+				if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+					onPlotClicked(new PointF(motionEvent.getX(), motionEvent
+							.getY()));
+				}
+				return true;
+			}
+		});
 
 		spWidthStyle = (Spinner) findViewById(R.id.spWidthStyle);
 		ArrayAdapter<BarRenderer.BarWidthStyle> adapter1 = new ArrayAdapter<BarRenderer.BarWidthStyle>(
@@ -288,7 +292,7 @@ public class CaloriesChartActivity extends Activity implements OnTouchListener {
 					}
 				});
 
-		mySimpleXYPlot.setDomainValueFormat(new NumberFormat() {
+		plot.setDomainValueFormat(new NumberFormat() {
 			@Override
 			public StringBuffer format(double value, StringBuffer buffer,
 					FieldPosition field) {
@@ -315,21 +319,15 @@ public class CaloriesChartActivity extends Activity implements OnTouchListener {
 		});
 		updatePlot();
 
-		mySimpleXYPlot.calculateMinMaxVals();
-		minXY = new PointF(mySimpleXYPlot.getCalculatedMinX().floatValue(),
-				mySimpleXYPlot.getCalculatedMinY().floatValue());
-		maxXY = new PointF(mySimpleXYPlot.getCalculatedMaxX().floatValue(),
-				mySimpleXYPlot.getCalculatedMaxY().floatValue());
-
 	}
 
 	private void updatePlot() {
 
 		// Remove all current series from each plot
-		Iterator<XYSeries> iterator1 = mySimpleXYPlot.getSeriesSet().iterator();
+		Iterator<XYSeries> iterator1 = plot.getSeriesSet().iterator();
 		while (iterator1.hasNext()) {
 			XYSeries setElement = iterator1.next();
-			mySimpleXYPlot.removeSeries(setElement);
+			plot.removeSeries(setElement);
 		}
 
 		// Setup our Series with the selected number of elements
@@ -337,10 +335,10 @@ public class CaloriesChartActivity extends Activity implements OnTouchListener {
 				SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Calories");
 
 		// add a new series' to the xyplot:
-		mySimpleXYPlot.addSeries(series1, formatter1);
+		plot.addSeries(series1, formatter1);
 
 		// Setup the BarRenderer with our selected options
-		MyBarRenderer renderer = ((MyBarRenderer) mySimpleXYPlot
+		MyBarRenderer renderer = ((MyBarRenderer) plot
 				.getRenderer(MyBarRenderer.class));
 		renderer.setBarRenderStyle(BarRenderer.BarRenderStyle.OVERLAID);
 		renderer.setBarWidthStyle((BarRenderer.BarWidthStyle) spWidthStyle
@@ -350,12 +348,12 @@ public class CaloriesChartActivity extends Activity implements OnTouchListener {
 
 		if (BarRenderer.BarRenderStyle.STACKED
 				.equals(BarRenderer.BarRenderStyle.OVERLAID)) {
-			mySimpleXYPlot.setRangeTopMin(1000);
+			plot.setRangeTopMin(1000);
 		} else {
-			mySimpleXYPlot.setRangeTopMin(1000);
+			plot.setRangeTopMin(1000);
 		}
 
-		mySimpleXYPlot.redraw();
+		plot.redraw();
 
 	}
 
@@ -363,17 +361,16 @@ public class CaloriesChartActivity extends Activity implements OnTouchListener {
 
 		// make sure the point lies within the graph area. we use gridrect
 		// because it accounts for margins and padding as well.
-		if (mySimpleXYPlot.getGraphWidget().getGridRect()
-				.contains(point.x, point.y)) {
-			Number x = mySimpleXYPlot.getXVal(point);
-			Number y = mySimpleXYPlot.getYVal(point);
+		if (plot.getGraphWidget().getGridRect().contains(point.x, point.y)) {
+			Number x = plot.getXVal(point);
+			Number y = plot.getYVal(point);
 
 			selection = null;
 			double xDistance = 0;
 			double yDistance = 0;
 
 			// find the closest value to the selection:
-			for (XYSeries series : mySimpleXYPlot.getSeriesSet()) {
+			for (XYSeries series : plot.getSeriesSet()) {
 				for (int i = 0; i < series.size(); i++) {
 					Number thisX = series.getX(i);
 					Number thisY = series.getY(i);
@@ -412,7 +409,7 @@ public class CaloriesChartActivity extends Activity implements OnTouchListener {
 			selectionWidget.setText(" " + selection.second.getTitle()
 					+ " Value: " + selection.second.getY(selection.first));
 		}
-		mySimpleXYPlot.redraw();
+		plot.redraw();
 	}
 
 	class MyBarFormatter extends BarFormatter {
@@ -472,142 +469,45 @@ public class CaloriesChartActivity extends Activity implements OnTouchListener {
 
 		return sortedMap;
 	}
-
+	
 	public void emailScreenshot(View v) {
 		View v1 = getWindow().getDecorView().getRootView();
-		// View v1 = iv.getRootView(); //even this works
-		// View v1 = findViewById(android.R.id.content); //this works too
-		// but gives only content
-		v1.setDrawingCacheEnabled(true);
-		myBitmap = v1.getDrawingCache();
-		saveBitmap(myBitmap);
-		sendMail(filePath);
+        // View v1 = iv.getRootView(); //even this works
+        // View v1 = findViewById(android.R.id.content); //this works too
+        // but gives only content
+        v1.setDrawingCacheEnabled(true);
+        myBitmap = v1.getDrawingCache();
+        saveBitmap(myBitmap);
+        sendMail(filePath);
 	}
 
 	public void saveBitmap(Bitmap bitmap) {
-		filePath = Environment.getExternalStorageDirectory() + File.separator
-				+ "Pictures/screenshot.png";
-		File imagePath = new File(filePath);
-		FileOutputStream fos;
-		try {
-			fos = new FileOutputStream(imagePath);
-			bitmap.compress(CompressFormat.PNG, 100, fos);
-			fos.flush();
-			fos.close();
-			sendMail(filePath);
-		} catch (FileNotFoundException e) {
-			Log.e("GREC", e.getMessage(), e);
-		} catch (IOException e) {
-			Log.e("GREC", e.getMessage(), e);
-		}
-	}
-
-	public void sendMail(String path) {
-		Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-		emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-				"Live Healthy - Calorie Chart");
-		emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-				"This is an autogenerated mail from Live Healthy app");
-		emailIntent.setType("image/png");
-		Uri myUri = Uri.parse("file://" + path);
-		emailIntent.putExtra(Intent.EXTRA_STREAM, myUri);
-		startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-	}
-
-	// Definition of the touch states
-	static final int NONE = 0;
-	static final int ONE_FINGER_DRAG = 1;
-	static final int TWO_FINGERS_DRAG = 2;
-	int mode = NONE;
-
-	PointF firstFinger;
-	float distBetweenFingers;
-	boolean stopThread = false;
-
-	@Override
-	public boolean onTouch(View arg0, MotionEvent event) {
-		switch (event.getAction() & MotionEvent.ACTION_MASK) {
-		case MotionEvent.ACTION_DOWN: // Start gesture
-			firstFinger = new PointF(event.getX(), event.getY());
-			mode = ONE_FINGER_DRAG;
-			stopThread = true;
-			break;
-		case MotionEvent.ACTION_UP:
-		case MotionEvent.ACTION_POINTER_UP:
-			mode = NONE;
-			break;
-		case MotionEvent.ACTION_POINTER_DOWN: // second finger
-			distBetweenFingers = spacing(event);
-			// the distance check is done to avoid false alarms
-			if (distBetweenFingers > 5f) {
-				mode = TWO_FINGERS_DRAG;
-			}
-			break;
-		case MotionEvent.ACTION_MOVE:
-			if (mode == ONE_FINGER_DRAG) {
-				PointF oldFirstFinger = firstFinger;
-				firstFinger = new PointF(event.getX(), event.getY());
-				scroll(oldFirstFinger.x - firstFinger.x);
-				mySimpleXYPlot.setDomainBoundaries(minXY.x, maxXY.x,
-						BoundaryMode.FIXED);
-				mySimpleXYPlot.redraw();
-
-			} else if (mode == TWO_FINGERS_DRAG) {
-				float oldDist = distBetweenFingers;
-				distBetweenFingers = spacing(event);
-				zoom(oldDist / distBetweenFingers);
-				mySimpleXYPlot.setDomainBoundaries(minXY.x, maxXY.x,
-						BoundaryMode.FIXED);
-				mySimpleXYPlot.redraw();
-			}
-			break;
-		}
-		return true;
-	}
-
-	private void zoom(float scale) {
-		float domainSpan = maxXY.x - minXY.x;
-		float domainMidPoint = maxXY.x - domainSpan / 2.0f;
-		float offset = domainSpan * scale / 2.0f;
-
-		minXY.x = domainMidPoint - offset;
-		maxXY.x = domainMidPoint + offset;
-
-		// minXY.x = Math.min(minXY.x, series[3].getX(series[3].size() - 3)
-		// .floatValue());
-		// maxXY.x = Math.max(maxXY.x, series[0].getX(1).floatValue());
-		minXY.x = Math.min(minXY.x, series1Numbers[series1Numbers.length - 3]
-				.floatValue());
-		maxXY.x = Math.max(maxXY.x, series1Numbers[1].floatValue());
-
-		clampToDomainBounds(domainSpan);
-	}
-
-	private void scroll(float pan) {
-		float domainSpan = maxXY.x - minXY.x;
-		float step = domainSpan / mySimpleXYPlot.getWidth();
-		float offset = pan * step;
-		minXY.x = minXY.x + offset;
-		maxXY.x = maxXY.x + offset;
-		clampToDomainBounds(domainSpan);
-	}
-
-	private void clampToDomainBounds(float domainSpan) {
-		float leftBoundary = series1Numbers[0].floatValue();
-		float rightBoundary = series1Numbers[series1Numbers.length - 1].floatValue();
-		// enforce left scroll boundary:
-		if (minXY.x < leftBoundary) {
-			minXY.x = leftBoundary;
-			maxXY.x = leftBoundary + domainSpan;
-		} else if (maxXY.x > series1Numbers[series1Numbers.length - 1].floatValue()) {
-			maxXY.x = rightBoundary;
-			minXY.x = rightBoundary - domainSpan;
-		}
-	}
-
-	private float spacing(MotionEvent event) {
-		float x = event.getX(0) - event.getX(1);
-		float y = event.getY(0) - event.getY(1);
-		return FloatMath.sqrt(x * x + y * y);
-	}
+        filePath = Environment.getExternalStorageDirectory()
+                + File.separator + "Pictures/screenshot.png";
+        File imagePath = new File(filePath);
+        FileOutputStream fos;
+        try {
+            fos = new FileOutputStream(imagePath);
+            bitmap.compress(CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+            sendMail(filePath);
+        } catch (FileNotFoundException e) {
+            Log.e("GREC", e.getMessage(), e);
+        } catch (IOException e) {
+            Log.e("GREC", e.getMessage(), e);
+        }
+    }
+ 
+    public void sendMail(String path) {
+        Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+                "Live Healthy - Calorie Chart");
+        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+                "This is an autogenerated mail from Live Healthy app");
+        emailIntent.setType("image/png");
+        Uri myUri = Uri.parse("file://" + path);
+        emailIntent.putExtra(Intent.EXTRA_STREAM, myUri);
+        startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+    }
 }
