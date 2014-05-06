@@ -14,8 +14,13 @@ import DBLayout.FoodRecord;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.speech.RecognizerIntent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +38,7 @@ import android.os.Build;
 public class RExerciseActivity extends Activity {
 
 	private static final int VOICE_REQUEST_CODE = 1234;
+	private ShakeListener mShaker;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +49,47 @@ public class RExerciseActivity extends Activity {
 			getFragmentManager().beginTransaction()
 			.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		final Vibrator vibe = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+
+	    mShaker = new ShakeListener(this);
+	    mShaker.setOnShakeListener(new ShakeListener.OnShakeListener () {
+	      public void onShake()
+	      {
+	        vibe.vibrate(100);
+	        Toast.makeText(getApplicationContext(), "Shooken", Toast.LENGTH_LONG).show();
+	        clearFields();
+	      }
+	    });
+		
 	}
+	
+	public void clearFields()
+	{
+		EditText wtype = (EditText)findViewById(R.id.input_workout_type);
+		EditText calp = (EditText)findViewById(R.id.input_calpermin);
+		EditText min = (EditText)findViewById(R.id.input_workout_duration);
+		EditText tot = (EditText)findViewById(R.id.total_cal_burnt);
+		wtype.setText("");
+		calp.setText("");
+		min.setText("");
+		tot.setText("");
+		
+	}
+	
+	@Override
+	  public void onResume()
+	  {
+	    mShaker.resume();
+	    super.onResume();
+	  }
+	  @Override
+	  public void onPause()
+	  {
+	    mShaker.pause();
+	    super.onPause();
+	  }
+	
+	
 	
 	public void addWorkout(View v)
 	{
