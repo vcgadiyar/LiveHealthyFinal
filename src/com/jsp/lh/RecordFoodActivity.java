@@ -168,6 +168,7 @@ TextToSpeech.OnInitListener{
 				if(hasFocus){
 					//Toast.makeText(getApplicationContext(), "got the focus", Toast.LENGTH_LONG).show();
 				}else {
+					
 					//Toast.makeText(getApplicationContext(), "lost the focus", Toast.LENGTH_LONG).show();
 					FoodEntity fe = null;
 					EditText edit_text1 = (EditText)findViewById(R.id.foodText);

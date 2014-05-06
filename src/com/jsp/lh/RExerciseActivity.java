@@ -163,6 +163,7 @@ public class RExerciseActivity extends Activity {
 			edit_Text1.setOnFocusChangeListener(new OnFocusChangeListener() {
 				@Override
 				public void onFocusChange(View v, boolean hasFocus) {
+					try {
 					if(hasFocus){
 						//Toast.makeText(getApplicationContext(), "got the focus", Toast.LENGTH_LONG).show();
 					}else {
@@ -201,7 +202,13 @@ public class RExerciseActivity extends Activity {
 						int tot = cals * wdur;
 						calt.setText(""+tot);
 					}
+				
+					}
+					catch (Exception e){
+						// Do nothing
+					}
 				}
+				
 			});
 		}
 		catch(Exception e)
