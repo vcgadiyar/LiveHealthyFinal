@@ -1,8 +1,8 @@
 package entities;
 
-public class ExerciseEntity {
+public class ExerciseEntity extends Entity{
 	
-	String name;
+	//String name;
 	int caloriespermin;
 	
 	public ExerciseEntity(String name, int caloriespermin)
@@ -11,21 +11,21 @@ public class ExerciseEntity {
 		this.caloriespermin = caloriespermin;
 	}
 	
-	public void setName(String name)
-	{
-		this.name = name;
-	}
+//	public void setName(String name)
+//	{
+//		this.name = name;
+//	}
 
 	public void setCalories(int caloriespermin)
 	{
 		this.caloriespermin = caloriespermin;
 	}
 	
-	public String getName()
-	{
-		return this.name;
-	}
-	
+//	public String getName()
+//	{
+//		return this.name;
+//	}
+//	
 	public int getCaloriesPerMin()
 	{
 		return this.caloriespermin;

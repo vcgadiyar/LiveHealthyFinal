@@ -28,6 +28,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnFocusChangeListener;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -39,6 +41,7 @@ public class RExerciseActivity extends Activity {
 
 	private static final int VOICE_REQUEST_CODE = 1234;
 	private ShakeListener mShaker;
+	private AutoCompleteTextView mactv;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,8 @@ public class RExerciseActivity extends Activity {
 		
 	}
 	
+	
+	
 	public void clearFields()
 	{
 		EditText wtype = (EditText)findViewById(R.id.input_workout_type);
@@ -80,6 +85,23 @@ public class RExerciseActivity extends Activity {
 	  public void onResume()
 	  {
 	    mShaker.resume();
+
+		ExerciseDatabase fd = new ExerciseDatabase(RExerciseActivity.this);
+		fd.open();
+		ArrayList<String> ar = new ArrayList<String>();
+		ar = fd.getAllExerciseNames();
+		fd.close();
+
+		String[] countries = new String[ar.size()];
+		countries = ar.toArray(countries);
+		ArrayAdapter adapter = new ArrayAdapter
+				(this,android.R.layout.simple_list_item_1,countries);
+
+		mactv = (AutoCompleteTextView) findViewById
+				(R.id.input_workout_type);
+		mactv.setThreshold(0);
+
+		mactv.setAdapter(adapter);
 	    super.onResume();
 	  }
 	  @Override

@@ -74,9 +74,29 @@ TextToSpeech.OnInitListener{
 				clearFields();
 			}
 		});
-		tts = new TextToSpeech(this, this);
-		speakOut();
+		
+	}
+	@Override
+	public void onResume()
+	{
 
+		FoodDatabase fd = new FoodDatabase(RecordFoodActivity.this);
+		fd.open();
+		ArrayList<String> ar = new ArrayList<String>();
+		ar = fd.getAllFoodNames();
+		fd.close();
+
+		String[] countries = new String[ar.size()];
+		countries = ar.toArray(countries);
+		ArrayAdapter adapter = new ArrayAdapter
+				(this,android.R.layout.simple_list_item_1,countries);
+
+		mactv = (AutoCompleteTextView) findViewById
+				(R.id.foodText);
+		mactv.setThreshold(0);
+
+		mactv.setAdapter(adapter);
+		super.onResume();
 	}
 	
 	@Override
@@ -174,23 +194,10 @@ TextToSpeech.OnInitListener{
 		});
 		TextView calText = (TextView)findViewById(R.id.calText);
 		calText.setText(cal_value);
+		
+		tts = new TextToSpeech(this, this);
+		speakOut();
 
-		FoodDatabase fd = new FoodDatabase(RecordFoodActivity.this);
-		fd.open();
-		ArrayList<String> ar = new ArrayList<String>();
-		ar = fd.getAllFoodNames();
-		fd.close();
-
-		String[] countries = new String[ar.size()];
-		countries = ar.toArray(countries);
-		ArrayAdapter adapter = new ArrayAdapter
-				(this,android.R.layout.simple_list_item_1,countries);
-
-		mactv = (AutoCompleteTextView) findViewById
-				(R.id.foodText);
-		mactv.setThreshold(1);
-
-		mactv.setAdapter(adapter);
 
 		return true;
 	}
