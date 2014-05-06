@@ -49,7 +49,6 @@
         androidPlot.title="Growth"
         androidPlot.titleWidget.labelPaint.textSize="@dimen/title_font_size" />
 
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -61,11 +60,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <Button
+            android:id="@+id/button_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_screen"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="emailScreenshot"
+            android:text="@string/email_screen" />
+
         <RelativeLayout
             android:id="@+id/sectionGraph"
-            android:visibility="invisible"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:visibility="invisible" >
 
             <SeekBar
                 android:id="@+id/sbFixed"

@@ -61,6 +61,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <Button
+            android:id="@+id/button_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:text="@string/email_screen" />
+        
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_screen"
+            android:onClick="emailScreenshot" />
+<!--             android:background="#000000" -->
+<!--             android:textColor="#FFFFFF" -->
+        
         <RelativeLayout
             android:id="@+id/sectionGraph"
             android:layout_width="fill_parent"
@@ -85,6 +101,7 @@
                 android:paddingRight="10dp"
                 android:progress="1" />
         </RelativeLayout>
+
     </LinearLayout>
 
 </LinearLayout>

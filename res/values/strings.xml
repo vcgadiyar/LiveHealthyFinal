@@ -60,5 +60,6 @@
     <string name="rec_workout">Record Workout</string>
     <string name="title_activity_add_food_item">AddFoodItem</string>
     <string name="title_activity_add_workout">AddWorkoutActivity</string>
+    <string name="email_screen">Email ScreenShot</string>
 
 </resources>
