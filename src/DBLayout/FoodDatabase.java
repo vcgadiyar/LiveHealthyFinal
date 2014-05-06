@@ -94,6 +94,7 @@ public class FoodDatabase {
 	// get a Cursor containing all information about the contact specified
 	// by the given id
 	public FoodEntity getOneFood(String name) {
+		try {
 		Cursor result = database.rawQuery(
 				"SELECT * FROM FoodDetails WHERE name = '" + name.trim()
 						+ "' COLLATE NOCASE", null);
@@ -116,6 +117,11 @@ public class FoodDatabase {
 			e1 = new FoodEntity(exName, calpermin, barcode);
 		}
 		return e1;
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
 	} // end method getOnContact
 	
 	public ArrayList<String> getAllFoodNames()

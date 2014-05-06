@@ -90,6 +90,8 @@ public class ExerciseDatabase {
 	// get a Cursor containing all information about the contact specified
 	// by the given id
 	public ExerciseEntity getOneExercise(String name) {
+		try 
+		{
 		Cursor result = database.rawQuery(
 				"SELECT * FROM ExerciseDetails WHERE name = '" + name.trim()
 						+ "' COLLATE NOCASE", null);
@@ -106,6 +108,11 @@ public class ExerciseDatabase {
 			e1 = new ExerciseEntity(exName, calpermin);
 		}
 		return e1;
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
 	} // end method getOnContact
 
 	public void removeAll() {
