@@ -1,8 +1,8 @@
 package entities;
 
-public class FoodEntity {
+public class FoodEntity extends Entity {
 	
-	String name;
+//	String name;
 	int calories;
 	String barcode;
 	
@@ -13,10 +13,10 @@ public class FoodEntity {
 		this.barcode = barcode;
 	}
 	
-	public void setName(String name)
-	{
-		this.name = name;
-	}
+//	public void setName(String name)
+//	{
+//		this.name = name;
+//	}
 	
 	public void setBarcode(String barcode)
 	{
@@ -28,10 +28,10 @@ public class FoodEntity {
 		this.calories = calories;
 	}
 	
-	public String getName()
-	{
-		return this.name;
-	}
+//	public String getName()
+//	{
+//		return this.name;
+//	}
 	
 	public int getCalories()
 	{

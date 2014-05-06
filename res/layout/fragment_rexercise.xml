@@ -37,13 +37,13 @@
                         android:layout_height="wrap_content"
                         android:text="@string/workout_type" />
 
-                    <EditText
+                    <AutoCompleteTextView
                         android:id="@+id/input_workout_type"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName" >
 
                         <requestFocus android:layout_width="wrap_content" />
-                    </EditText>
+                    </AutoCompleteTextView>
 
                     <ImageButton
                         android:id="@+id/speakButton"

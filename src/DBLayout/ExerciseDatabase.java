@@ -115,6 +115,26 @@ public class ExerciseDatabase {
 		database.delete(DATABASE_NAME, null, null);
 		close();
 	}
+	
+	public ArrayList<String> getAllExerciseNames()
+	{
+		Cursor result = database.rawQuery(
+				"SELECT * FROM ExerciseDetails", null);
+		int nameIndex;
+		ArrayList<String> ar = new ArrayList<String>();
+		if (result != null && result.moveToFirst()) {
+			while (result.isAfterLast() == false) {
+				nameIndex = result.getColumnIndex("name");
+				
+				String exName = result.getString(nameIndex);
+				
+				ar.add(exName);
+				result.moveToNext();
+			}
+		}
+		return ar;
+		
+	}
 
 	// delete the contact specified by the given String name
 	public void deleteFood(int id) {
