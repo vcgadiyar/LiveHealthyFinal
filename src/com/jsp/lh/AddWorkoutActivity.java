@@ -101,7 +101,7 @@ public class AddWorkoutActivity extends Activity {
 
 			if (ftext.matches("") || caltext.matches("")) {
 				Toast toast = Toast.makeText(getApplicationContext(),
-						"aaKindly check Input entered!", Toast.LENGTH_SHORT);
+						"Kindly check Input entered!", Toast.LENGTH_SHORT);
 				toast.show();
 			} else {
 				ExerciseEntity fe = new ExerciseEntity(ftext,

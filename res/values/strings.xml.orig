@@ -61,6 +61,10 @@
     <string name="rec_workout">Record Workout</string>
     <string name="title_activity_add_food_item">AddFoodItem</string>
     <string name="title_activity_add_workout">AddWorkoutActivity</string>
+<<<<<<< HEAD
     <string name="email_screen">Email ScreenShot</string>
 
+=======
+    
+>>>>>>> 488be8f11a8174e225294db773068a45bf44a659
 </resources>
