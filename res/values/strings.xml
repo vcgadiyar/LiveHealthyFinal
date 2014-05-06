@@ -33,7 +33,7 @@
     <string name="record_existing">Record Existing Food Item</string>
 
     <color name="l_blue">#ADD8E6</color>
-    <color name="cyan_col">#00FFFF</color>
+    <color name="cyan_col">#fec04c</color>
     <color name="dark_blue">#00FF00</color>
     <color name="orange_col">#FFA500</color>
 

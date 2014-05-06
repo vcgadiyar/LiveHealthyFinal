@@ -1,21 +1,25 @@
 package com.jsp.lh;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
-import entities.FoodEntity;
+import java.util.Map;
 
 import DBLayout.FoodDatabase;
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
+import entities.FoodEntity;
 
-public class FoodDetailsActivity extends Activity {
+import android.app.ListActivity;
+
+public class FoodDetailsActivity extends ListActivity {
+
+	private static final String TEXT1 = "text1";
+	private static final String TEXT2 = "text2";
 
 	FoodDatabase fd;
 
@@ -24,25 +28,18 @@ public class FoodDetailsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_food_details);
 
-		final ListView listview = (ListView) findViewById(R.id.listview);
-		String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-				"Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-				"Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-				"OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-				"Android", "iPhone", "WindowsMobile" };
+		// final ListView listview = (ListView) findViewById(R.id.listview);
 
 		fd = new FoodDatabase(FoodDetailsActivity.this);
 		fd.open();
 		ArrayList<FoodEntity> foods = fd.getAllFoods();
 		fd.close();
 
-		final ArrayList<String> list = new ArrayList<String>();
-		for (FoodEntity food : foods) {
-			list.add(food.getCalories() + "\t \t " + food.getName());
-		}
-		final StableArrayAdapter adapter = new StableArrayAdapter(this,
-				android.R.layout.simple_list_item_1, list);
-		listview.setAdapter(adapter);
+		List<Map<String, String>> foodItems = convertToListItems(foods);
+
+		final ListAdapter listAdapter = createListAdapter(foods);
+		setListAdapter(listAdapter);
+
 
 	}
 
@@ -66,28 +63,30 @@ public class FoodDetailsActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private class StableArrayAdapter extends ArrayAdapter<String> {
 
-		HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
 
-		public StableArrayAdapter(Context context, int textViewResourceId,
-				List<String> objects) {
-			super(context, textViewResourceId, objects);
-			for (int i = 0; i < objects.size(); ++i) {
-				mIdMap.put(objects.get(i), i);
-			}
+	private ListAdapter createListAdapter(final ArrayList<FoodEntity> foods) {
+		final String[] fromMapKey = new String[] { TEXT1, TEXT2 };
+		final int[] toLayoutId = new int[] { android.R.id.text1,
+				android.R.id.text2 };
+		final List<Map<String, String>> list = convertToListItems(foods);
+
+		return new SimpleAdapter(this, list,
+				android.R.layout.simple_list_item_2, fromMapKey, toLayoutId);
+	}
+
+	private List<Map<String, String>> convertToListItems(
+			ArrayList<FoodEntity> foods) {
+		final List<Map<String, String>> listItem = new ArrayList<Map<String, String>>(
+				foods.size());
+
+		for (final FoodEntity food : foods) {
+			final Map<String, String> listItemMap = new HashMap<String, String>();
+			listItemMap.put(TEXT1, food.getName());
+			listItemMap.put(TEXT2, food.getCalories() + " calories");
+			listItem.add(Collections.unmodifiableMap(listItemMap));
 		}
 
-		@Override
-		public long getItemId(int position) {
-			String item = getItem(position);
-			return mIdMap.get(item);
-		}
-
-		@Override
-		public boolean hasStableIds() {
-			return true;
-		}
-
+		return Collections.unmodifiableList(listItem);
 	}
 }
